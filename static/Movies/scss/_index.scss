@@ -37,7 +37,8 @@
     background-color: $showbackground;
     width: 40%;
     margin: 1em auto;
-    height: auto;
+    //height: auto;
+    height: 33em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -157,21 +158,17 @@
             .modal-title{
                 text-align: center;
             }
-            .modal-img{
-                max-width: 80%;
-                width: auto;
+            .trailer{
                 margin: 0 auto;
-                border-radius: 30px;
-                -webkit-border-radius: 30px;
-                -moz-border-radius: 30px;
-                -ms-border-radius: 30px;
-                -o-border-radius: 30px;
                 padding: 1em 0;
+                height: 20em;
+                width: 30em;
             }
             .modal-description{
                 .show-overview{
                     text-align: center;
                     font-family: 'Times New Roman', Times, serif;
+                    margin: 0 1em 1em 1em;
                 }
             }
         }
@@ -204,7 +201,7 @@
     }
     .modal{
         .modal-content{
-            width: 40%;
+            width: 50%;
         }
     }
 }
