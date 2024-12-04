@@ -290,10 +290,11 @@ async function getUserInput(value){
     // if we dont have a response
     else{
         section.innerHTML = `
-        <h2>Nothing Was Found: "${value}"</h2>
+        <h2 style="grid-column:1/4;">Nothing Was Found: "${value}"</h2>
         `
         section.style.textAlign = "Center"
-        section.style.paddingTop = "10em"
+        section.style.padding= "10em 0"
+        section.style.justifyContent = "center"
     }
     
 }

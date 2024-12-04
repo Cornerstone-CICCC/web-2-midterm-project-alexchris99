@@ -142,7 +142,7 @@
         margin: 10% auto;/*15%fromthetopandcentered*/
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;/*Couldbemoreorless,dependingonscreensize*/
+        width: 90%;/*Couldbemoreorless,dependingonscreensize*/
         border-radius: 20px;
         -webkit-border-radius: 2;
         -moz-border-radius: 2;
@@ -158,13 +158,14 @@
             flex-direction: column;
             justify-content: center;
             .modal-title{
+                padding-top: 10px;
                 text-align: center;
             }
             .trailer{
                 margin: 0 auto;
                 padding: 1em 0;
-                max-width: 250px;
-                width: auto;
+                width: 90%;
+                height: 15em;
             }
             .modal-description{
                 .show-overview{
@@ -177,11 +178,13 @@
     }
     /* The Close Button */
     .close {
+        margin-top: -.5em;
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
         background-color: white;
+        height: 1.2em;
     }
     
     .close:hover,.close:focus {
@@ -211,8 +214,7 @@ footer{
         .modal-content{
             div{
                 .trailer{
-                    max-width: 60em;
-                    width: auto;
+                    height: 20em;
                 }
             }
         }
