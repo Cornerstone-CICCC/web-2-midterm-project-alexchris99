@@ -189,9 +189,6 @@ async function getUserInput(value){
         let videUrl 
         let name
 
-        // rate type show type == false then "G" else "R"
-        category = show.adult == false ? "G" : "R"
-
         // obtain the title if it exist
         name = show.title ?? show.name
 
@@ -210,12 +207,17 @@ async function getUserInput(value){
         // create container for the show
         let movieElement = document.createElement("div")
 
-        if(!show.poster_path){
-            img="../../static/Movies/img/no_image.png"
-        }
         if(show.poster_path){
             img = `https://image.tmdb.org/t/p/w185/${show.poster_path}`
         }
+        if(show.profile_path){
+            img = `https://image.tmdb.org/t/p/w185/${show.profile_path}`
+        }
+        if(!show.poster_path && !show.profile_path){
+            img="../../static/Movies/img/no_image.png"
+        }
+
+        console.log(show)
 
         // generate the content of the show container
         movieElement.innerHTML = `
@@ -225,9 +227,8 @@ async function getUserInput(value){
             <div class = "show-info">
                 <div class = "show-description">
                     <ul>
-                        <li><p>Rating: ${show.vote_average}</p></li>
                         <li><p>Type: ${show.media_type}</p></li>
-                        <li><p>Rated: ${category}</p></li>
+                        <li><p>Popularity: ${show.popularity}</p></li>
                     </ul>
                 </div>
             </div>
@@ -251,6 +252,15 @@ async function getUserInput(value){
             // add a class so we can add styles
             modalCont.classList.add("modal-content")
 
+            let overview = " "
+            if(show.overview){
+                overview = `
+                <p class="show-overview">
+                        ${show.overview}
+                </p>
+                `
+            }
+
             // modal innerHtml
             modalCont.innerHTML = `
             <span class="close">&times</span>
@@ -258,9 +268,7 @@ async function getUserInput(value){
                 <h3 class = "modal-title">${name}</h3>
                 <iframe class="trailer" src="https://www.youtube.com/embed/${videUrl}" controls allowfullscreen></iframe>
                 <div class = "modal-description">
-                    <p class="show-overview">
-                        ${show.overview}
-                    </p>
+                    ${overview}
                 </div>
             </div>
             `
