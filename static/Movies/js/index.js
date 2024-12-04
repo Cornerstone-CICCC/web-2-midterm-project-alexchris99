@@ -165,13 +165,13 @@ async function getUserInput(value){
 
     // remove the pading of the section 
     section.style.paddingTop = "0"
-
-    // get the title of the page and change it for search
-    let titlepage = document.querySelector("h1")
-    titlepage.textContent = "Search"
     
     //fetch the api for a keyboard lookup
     let response = await fetch(`https://api.themoviedb.org/3/search/multi?query=${value}&language=en-US&page=1`, options)
+
+    // get the title of the page and change it for search
+    let titlepage = document.querySelector("h1")
+    titlepage.textContent = `Search ${value}`
     
     // convert the data to a json object
     let data = await response.json()
@@ -305,6 +305,7 @@ form.addEventListener("submit", function (e){
     e.preventDefault()
     let userInput = form.querySelector("input").value
     getUserInput(userInput)
+    form.reset()
 })
 
 

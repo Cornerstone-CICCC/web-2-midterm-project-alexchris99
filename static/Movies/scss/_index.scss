@@ -32,16 +32,13 @@
 }
 
 
-// Show contaioner info
+// Show container info
 .show-container{
     background-color: $showbackground;
     width: 70%;
     margin: 1em auto;
-    //height: auto;
-    height: 33em;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-content: center;
     border: 3px solid white;
     border-radius: 10px;
@@ -65,13 +62,13 @@
     }
     h2{
         text-align: center;
-        margin: 1em 0 0 0;
+        margin: .5em;
         background-color: $showbackground;
     }
     .img-show{
         max-width: 60%;
         width: auto;
-        margin:.5em auto;
+        margin:.8em auto;
         border-radius: 20px;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
@@ -196,6 +193,50 @@
 
 footer{
     text-align: center;
+}
+
+// about us
+.about-description{
+    padding-top: 1em ;
+    width: 80%;
+    margin: 0 auto;
+    .page-description{
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .gif-container{
+        text-align: center;
+        margin: 1em auto;
+        width: 80%;
+        height: auto;
+        .container-typing{
+            display: inline-block;
+        }
+        h2{
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: typing;
+            animation-duration: 6s;
+            animation-timing-function: steps(90, end);
+            animation-fill-mode: forwards;
+        }
+        .gif{
+            width: 100%;
+            height: auto;
+        }   
+    }
+}
+
+@keyframes typing {
+    from{
+        width: 0;
+    }
+    to{
+        width: 100%;
+    }
 }
 
 @media(min-width: 720px ){
