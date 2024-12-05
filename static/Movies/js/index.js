@@ -312,6 +312,8 @@ form.addEventListener("submit", function (e){
 })
 
 document.querySelector(".mode").addEventListener("click", () =>{
+    // dark-ligth icon
+    document.querySelector(".dark-ligth").classList.toggle("dark")
     // html
     document.querySelector("html").classList.toggle("dark")
     //nav bar
@@ -372,7 +374,5 @@ document.querySelector(".mode").addEventListener("click", () =>{
     // footer
     document.querySelector("footer > p").classList.toggle("dark")
 })
-
-
 // call the function
 trendingshows()

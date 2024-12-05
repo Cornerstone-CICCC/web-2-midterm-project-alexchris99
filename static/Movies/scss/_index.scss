@@ -8,6 +8,9 @@
     font-family: "Bebas Neue", sans-serif;
     background-color: $backgroundSite; 
     color: white;
+    &.dark{
+        background-color: #D8D2C2;
+    }
 }
 
 html{
@@ -40,6 +43,7 @@ nav{
 
 .navbar{
     .navbar-brand{
+        width: 6em;
         color: white;
         &.dark{
             color:black;
@@ -107,9 +111,17 @@ form{
         border: none;
         padding: 0 1em;
         position: absolute;
+        display: flex;
+        justify-content: left;
         &.dark{
             background-color: #D8D2C2;
             color: black;
+        }
+        .dark-ligth{
+            width: 10%;
+            &.dark{
+                background-color: #D8D2C2;
+            }
         }
     }
 }
