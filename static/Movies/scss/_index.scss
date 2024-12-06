@@ -109,16 +109,16 @@ form{
     }
     .mode{
         border: none;
-        padding: 0 1em;
-        position: absolute;
         display: flex;
-        justify-content: left;
+        justify-content: center;
+        align-content: center;
+        width: 100px;
         &.dark{
             background-color: #D8D2C2;
             color: black;
         }
         .dark-ligth{
-            width: 10%;
+            width:50%;
             &.dark{
                 background-color: #D8D2C2;
             }
@@ -256,6 +256,41 @@ form{
     }
 }
 
+// category //
+.genre-Movies{
+    margin-top: 3em;
+    &.dark{
+        background-color: #D8D2C2;
+    }
+    .category{
+        margin-bottom: 3em;
+        display: flex;
+        overflow-x:scroll;
+        scrollbar-width: none;
+        &.dark{
+            background-color: #D8D2C2;
+        }
+        gap: 13em;
+        .GMovie{
+            position: absolute;
+            height: auto;
+            margin: -1em 0 0 .5em;
+            &.dark{
+                color: black;
+                background-color: #D8D2C2;            
+            }
+        }
+        .item{
+            display: flex;
+            .show-container{
+                flex-basis: 300px;
+                flex-shrink: 0;
+                width: 100%;
+            }
+        }
+    }
+}
+
 // Modal
 /* The Modal (background) */
 .modal {
@@ -305,6 +340,7 @@ form{
                     text-align: center;
                     font-family: 'Times New Roman', Times, serif;
                     margin: 0 1em 1em 1em;
+                    font-size: 1em;
                 }
             }
         }
@@ -418,6 +454,11 @@ footer{
             div{
                 .trailer{
                     height: 20em;
+                }
+                .modal-description{
+                    .show-overview{
+                        font-size: 1.5em;
+                    }
                 }
             }
         }
