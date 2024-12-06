@@ -15,10 +15,8 @@ const trendingshows = async () =>{
     if(document.querySelector("h1").textContent.includes("Trending")){
            // global variable to store the api response
         let response
-
         // title of the page
         const pageTitle = document.querySelector("h1")
-
         // fetch Trending movies and Tv
         if(pageTitle.textContent == "Trending"){
             response = await fetch('https://api.themoviedb.org/3/trending/all/day?language=en-US', options)
@@ -37,20 +35,15 @@ const trendingshows = async () =>{
         
         //  loop throw the array
         data.forEach(async (show) => {
-
             // global variables
             let videUrl 
             let name
-
             // rate type show type == false then "G" else "R"
             category = show.adult == false ? "G" : "R"
-
             // obtain the title if it exist
             name = show.title ?? show.name
-
             // lookup for the video this works because we convert the for loop in a async function
             videUrl = show.media_type == "movie" ? await getVideoMovie(show.id) : await getVideoTv(show.id)
-
             // we categorize the video cause there are some cases that we dont have url
             if(videUrl && videUrl != undefined){
                 // get only the key of the video
@@ -63,60 +56,34 @@ const trendingshows = async () =>{
             // create container for the show
             let movieElement = document.createElement("div")
             movieElement.classList.add("item")
-
             // generate the content of the show container
-            movieElement.innerHTML = `
-            <div class = "show-container">
-                <h2>${name}</h2>
-                <img  class = "img-show"src="https://image.tmdb.org/t/p/w185/${show.poster_path}">
-                <div class = "show-info">
-                    <div class = "show-description">
-                        <ul>
-                            <li><p>Rating: ${show.vote_average}</p></li>
-                            <li><p>Type: ${show.media_type}</p></li>
-                            <li><p>Rated: ${category}</p></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            `
+            movieElement = htmlTrendingConstructor(name, show, movieElement)
             // add and evenlister to clicking the image
             movieElement.querySelector(".img-show").addEventListener("click",(e)=>{
-
                 // we stop the fucntions propagation
                 e.stopPropagation()
-
                 // create a modal
                 let modal = document.querySelector(".modal")
-
                 // clean the modal
                 modal.innerHTML = ""
-
                 // create a modal container
                 let modalCont = document.createElement("div")
-
                 // add a class so we can add styles
                 modalCont.classList.add("modal-content")
-
-                // modal innerHtml
-                modalCont.innerHTML = `
-                <span class="close">&times</span>
-                <div>
-                    <h3 class = "modal-title">${name}</h3>
-                    <iframe class="trailer" src="https://www.youtube.com/embed/${videUrl}" controls allowfullscreen></iframe>
-                    <div class = "modal-description">
-                        <p class="show-overview">
+                let overview = " "
+                if(show.overview){
+                    overview = `
+                    <p class="show-overview">
                             ${show.overview}
-                        </p>
-                    </div>
-                </div>
-                `
+                    </p>
+                    `
+                }
+                // modal innerHtml
+                modalCont = modalconstructor(name, videUrl, overview, modalCont)
                 // apend the modal 
                 modal.append(modalCont)
-
                 // display the modal
                 modal.style.display = "block"
-
                 // how to close the modal
                 modalCont.querySelector(".close").addEventListener("click", ()=>{
                     modal.style.display = "none"
@@ -130,39 +97,29 @@ const trendingshows = async () =>{
 
 // User search 
 async function getUserInput(value){
-
     // remove the pading of the section 
-    section.style.paddingTop = "0"
-    
+    section.style.paddingTop = "0"   
     //fetch the api for a keyboard lookup
     let response = await fetch(`https://api.themoviedb.org/3/search/multi?query=${value}&language=en-US&page=1`, options)
-
     // get the title of the page and change it for search
     let titlepage = document.querySelector("h1")
-    titlepage.textContent = `Search ${value}`
-    
+    titlepage.textContent = `Search ${value}` 
     // convert the data to a json object
     let data = await response.json()
     data = data.results
-
     // clear the section area
     section.innerHTML= " "
-
     // if we have a response greater tha 0
     if(data.length > 0){
         //  loop throw the array
     data.forEach(async (show) => {
-
         // global variables
         let videUrl 
         let name
-
         // obtain the title if it exist
         name = show.title ?? show.name
-
         // lookup for the video this works because we convert the for loop in a async function
         videUrl = show.media_type == "movie" ? await getVideoMovie(show.id) : await getVideoTv(show.id)
-
         // we categorize the video cause there are some cases that we dont have url
         if(videUrl && videUrl != undefined){
             // get only the key of the video
@@ -175,7 +132,6 @@ async function getUserInput(value){
         // create container for the show
         let movieElement = document.createElement("div")
         movieElement.classList.add("item")
-
         if(show.poster_path){
             img = `https://image.tmdb.org/t/p/w185/${show.poster_path}`
         }
@@ -185,42 +141,19 @@ async function getUserInput(value){
         if(!show.poster_path && !show.profile_path){
             img="../../static/Movies/img/no_image.png"
         }
-
-        console.log(show)
-
-        // generate the content of the show container
-        movieElement.innerHTML = `
-        <div class = "show-container">
-            <h2>${name}</h2>
-            <img  class = "img-show"src="${img}">
-            <div class = "show-info">
-                <div class = "show-description">
-                    <ul>
-                        <li><p>Type: ${show.media_type}</p></li>
-                        <li><p>Popularity: ${show.popularity}</p></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        `
+        movieElement = htmlSearchCostructor(name,img,show, movieElement)
         // add and evenlister to clicking the image
         movieElement.querySelector(".img-show").addEventListener("click",(e)=>{
-
             // we stop the fucntions propagation
             e.stopPropagation()
-
             // create a modal
             let modal = document.querySelector(".modal")
-
             // clean the modal
             modal.innerHTML = ""
-
             // create a modal container
             let modalCont = document.createElement("div")
-
             // add a class so we can add styles
             modalCont.classList.add("modal-content")
-
             let overview = " "
             if(show.overview){
                 overview = `
@@ -228,25 +161,13 @@ async function getUserInput(value){
                         ${show.overview}
                 </p>
                 `
-            }
-
+            }           
             // modal innerHtml
-            modalCont.innerHTML = `
-            <span class="close">&times</span>
-            <div>
-                <h3 class = "modal-title">${name}</h3>
-                <iframe class="trailer" src="https://www.youtube.com/embed/${videUrl}" controls allowfullscreen></iframe>
-                <div class = "modal-description">
-                    ${overview}
-                </div>
-            </div>
-            `
+            modalCont = modalconstructor(name, videUrl, overview, modalCont)
             // apend the modal 
             modal.append(modalCont)
-
             // display the modal
             modal.style.display = "block"
-
             // how to close the modal
             modalCont.querySelector(".close").addEventListener("click", ()=>{
                 modal.style.display = "none"
@@ -266,6 +187,187 @@ async function getUserInput(value){
         section.style.justifyContent = "center"
     }
     
+}
+
+// categories movies-tv //
+async function categories(){
+    if(document.querySelector("h1").textContent == "Categories Tv" ||  document.querySelector("h1").textContent == "Categories Movies" ){
+        let response
+        // container
+        if(document.querySelector("h1").textContent == "Categories Movies"){
+             // Movies genres
+            response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options)  
+        }       
+        if(document.querySelector("h1").textContent == "Categories Tv"){
+            // Tv genres
+            response= await fetch('https://api.themoviedb.org/3/genre/tv/list?language=en', options)
+        }
+        // convert the array to json file
+        let datacategories = await response.json()
+        datacategories = datacategories.genres
+        // get movies for each genre
+        datacategories.forEach(async(genre) => {
+            let responseMoviesCategory = await fetch(`https://api.themoviedb.org/3/movie/${genre.id}/similar?language=en-US&page=1`, options)
+            let dataCategory = await responseMoviesCategory.json()
+            dataCategory = dataCategory.results
+            if(dataCategory){
+                let section = document.querySelector(".genre-Movies")
+                let cont = 0
+                // create a container per category
+                let category = document.createElement("div")
+                category.classList.add("category")
+                dataCategory.forEach(async(movie) => {
+                    // global variables
+                    let videUrl 
+                    let name
+                    // obtain the title if it exist
+                    name = movie.title ?? movie.name
+                    // lookup for the video this works because we convert the for loop in a async function
+                    videUrl = await getVideoMovie(movie.id)
+                    // we categorize the video cause there are some cases that we dont have url
+                    if(videUrl && videUrl != undefined){
+                        // get only the key of the video
+                        videUrl = videUrl.key
+                    }
+                    else(
+                        // if no key rand video from youtube
+                        videUrl = "hCpKNNtUwxA"
+                    )
+                    // create container for the movie
+                    let movieElement = document.createElement("div")
+                    movieElement.classList.add("item")
+                    if(movie.poster_path){
+                        img = `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
+                    }
+                    if(movie.profile_path){
+                        img = `https://image.tmdb.org/t/p/w185/${movie.profile_path}`
+                    }
+                    if(!movie.poster_path && !movie.profile_path){
+                        img="../../static/Movies/img/no_image.png"
+                    }
+                    // generate the content of the show container
+                    movieElement = htmlGenreCostructor(img,name,movie,movieElement)
+                    // add and evenlister to clicking the image
+                    movieElement.querySelector(".img-show").addEventListener("click",(e)=>{
+                        // we stop the fucntions propagation
+                        e.stopPropagation()
+                        // create a modal
+                        let modal = document.querySelector(".modal")
+                        // clean the modal
+                        modal.innerHTML = ""
+                        // create a modal container
+                        let modalCont = document.createElement("div")
+                        // add a class so we can add styles
+                        modalCont.classList.add("modal-content")
+                        let overview = " "
+                        if(movie.overview){
+                            overview = `
+                            <p class="show-overview">
+                                    ${movie.overview}
+                            </p>
+                            `
+                        }
+                        // modal innerHtml
+                        modalCont = modalconstructor(name, videUrl, overview, modalCont)
+                        // apend the modal 
+                        modal.append(modalCont)
+                        // display the modal
+                        modal.style.display = "block"
+                        // how to close the modal
+                        modalCont.querySelector(".close").addEventListener("click", ()=>{
+                            modal.style.display = "none"
+                        })
+                    })
+                    // apend the movie element in the doc
+                    category.append(movieElement)
+                    cont += 1
+                    if(cont >= dataCategory.length){
+                        let genreCat = document.createElement("h2")
+                        genreCat.textContent = `${genre.name}`
+                        genreCat.classList.add("GMovie")
+                        category.prepend(genreCat)
+                        section.append(category)
+                    }
+                });
+            }
+        });
+    }
+}
+
+
+
+// CONSTRUCTORS AND URL FUNCTIONS //
+// html trending constructor
+function htmlTrendingConstructor(name, show, movieElement){
+    movieElement.innerHTML = `
+    <div class = "show-container">
+        <h2>${name}</h2>
+        <img  class = "img-show"src="https://image.tmdb.org/t/p/w185/${show.poster_path}">
+        <div class = "show-info">
+            <div class = "show-description">
+                <ul>
+                    <li><p>Rating: ${show.vote_average}</p></li>
+                    <li><p>Type: ${show.media_type}</p></li>
+                    <li><p>Rated: ${category}</p></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    `
+    return movieElement
+}
+
+// html show  user input constructor
+function htmlSearchCostructor(name, img,show, movieElement){
+    // generate the content of the show container
+    movieElement.innerHTML = `
+    <div class = "show-container">
+        <h2>${name}</h2>
+        <img  class = "img-show"src="${img}">
+        <div class = "show-info">
+            <div class = "show-description">
+                <ul>
+                    <li><p>Type: ${show.media_type}</p></li>
+                    <li><p>Popularity: ${show.popularity}</p></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    `
+    return movieElement
+}
+
+// html show genre constrcutor
+function htmlGenreCostructor(img,name,movie, movieElement){
+    movieElement.innerHTML = `
+        <div class = "show-container">
+            <h2>${name}</h2>
+            <img  class = "img-show"src="${img}">
+            <div class = "show-info">
+                <div class = "show-description">
+                    <ul>
+                        <li><p>Lenguage: ${movie.original_language}</p></li>
+                        <li><p>Popularity: ${movie.popularity}</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        `
+    return movieElement
+}
+
+// modal constructor
+function modalconstructor(name, videUrl, overview, modalCont){
+    modalCont.innerHTML = `
+        <span class="close">&times</span>
+        <div>
+            <h3 class = "modal-title">${name}</h3>
+            <iframe class="trailer" src="https://www.youtube.com/embed/${videUrl}" controls allowfullscreen></iframe>
+            <div class = "modal-description">
+                ${overview}
+            </div>
+        </div>`
+    return modalCont 
 }
 
 // get the videos of the movies
@@ -302,159 +404,7 @@ async function getVideoTv(id){
     return filter
 }
 
-// categories movies-tv //
-async function categories(){
-    if(document.querySelector("h1").textContent == "Categories Tv" ||  document.querySelector("h1").textContent == "Categories Movies" ){
-        let response
-        // container
-        if(document.querySelector("h1").textContent == "Categories Movies"){
-             // Movies genres
-            response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options)
-    
-        }
-        
-        if(document.querySelector("h1").textContent == "Categories Tv"){
-            // Tv genres
-            response= await fetch('https://api.themoviedb.org/3/genre/tv/list?language=en', options)
-        }
-        // convert the array to json file
-        let datacategories = await response.json()
-        console.log(datacategories)
-        datacategories = datacategories.genres
-
-        // get movies for each genre
-        datacategories.forEach(async(genre) => {
-            let responseMoviesCategory = await fetch(`https://api.themoviedb.org/3/movie/${genre.id}/similar?language=en-US&page=1`, options)
-            let dataCategory = await responseMoviesCategory.json()
-            dataCategory = dataCategory.results
-            //console.log(dataCategory)
-            //console.log(genre.name)
-
-            if(dataCategory){
-                let section = document.querySelector(".genre-Movies")
-                let cont = 0
-                // create a container per category
-                let category = document.createElement("div")
-                category.classList.add("category")
-                dataCategory.forEach(async(movie) => {
-                    // global variables
-                    let videUrl 
-                    let name
-                    // obtain the title if it exist
-                    name = movie.title ?? movie.name
-
-                    // lookup for the video this works because we convert the for loop in a async function
-                    videUrl = await getVideoMovie(movie.id)
-
-                    // we categorize the video cause there are some cases that we dont have url
-                    if(videUrl && videUrl != undefined){
-                        // get only the key of the video
-                        videUrl = videUrl.key
-                    }
-                    else(
-                        // if no key rand video from youtube
-                        videUrl = "hCpKNNtUwxA"
-                    )
-                    // create container for the movie
-                    let movieElement = document.createElement("div")
-                    movieElement.classList.add("item")
-
-                    if(movie.poster_path){
-                        img = `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
-                    }
-                    if(movie.profile_path){
-                        img = `https://image.tmdb.org/t/p/w185/${movie.profile_path}`
-                    }
-                    if(!movie.poster_path && !movie.profile_path){
-                        img="../../static/Movies/img/no_image.png"
-                    }
-
-                    //console.log(movie)
-
-                    // generate the content of the show container
-                    movieElement.innerHTML = `
-                    <div class = "show-container">
-                        <h2>${name}</h2>
-                        <img  class = "img-show"src="${img}">
-                        <div class = "show-info">
-                            <div class = "show-description">
-                                <ul>
-                                    <li><p>Lenguage: ${movie.original_language}</p></li>
-                                    <li><p>Popularity: ${movie.popularity}</p></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    `
-                    // add and evenlister to clicking the image
-                    movieElement.querySelector(".img-show").addEventListener("click",(e)=>{
-
-                        // we stop the fucntions propagation
-                        e.stopPropagation()
-
-                        // create a modal
-                        let modal = document.querySelector(".modal")
-
-                        // clean the modal
-                        modal.innerHTML = ""
-
-                        // create a modal container
-                        let modalCont = document.createElement("div")
-
-                        // add a class so we can add styles
-                        modalCont.classList.add("modal-content")
-
-                        let overview = " "
-                        if(movie.overview){
-                            overview = `
-                            <p class="show-overview">
-                                    ${movie.overview}
-                            </p>
-                            `
-                        }
-
-                        // modal innerHtml
-                        modalCont.innerHTML = `
-                        <span class="close">&times</span>
-                        <div>
-                            <h3 class = "modal-title">${name}</h3>
-                            <iframe class="trailer" src="https://www.youtube.com/embed/${videUrl}" controls allowfullscreen></iframe>
-                            <div class = "modal-description">
-                                ${overview}
-                            </div>
-                        </div>
-                        `
-                        // apend the modal 
-                        modal.append(modalCont)
-
-                        // display the modal
-                        modal.style.display = "block"
-
-                        // how to close the modal
-                        modalCont.querySelector(".close").addEventListener("click", ()=>{
-                            modal.style.display = "none"
-                        })
-                    })
-                    // apend the movie element in the doc
-                    category.append(movieElement)
-                    cont += 1
-                    if(cont >= dataCategory.length){
-                        let genreCat = document.createElement("h2")
-                        genreCat.textContent = `${genre.name}`
-                        genreCat.classList.add("GMovie")
-                        category.prepend(genreCat)
-                        section.append(category)
-                    }
-                });
-            }
-        });
-    }
-}
-
-categories()
-
-
-
+// FORM SUBMISION EVENT//
 // Handle form submision
 let form = document.querySelector("form")
 form.addEventListener("submit", function (e){
@@ -464,7 +414,7 @@ form.addEventListener("submit", function (e){
     form.reset()
 })
 
-// dark-ligth mode//
+// DARK AND LIGTH MODE//
 document.querySelector(".mode").addEventListener("click", () =>{
     // dark-ligth icon
     document.querySelector(".dark-ligth").classList.toggle("dark")
@@ -562,6 +512,7 @@ scrollBars.forEach(bar => {
     bar.style.scrollbarWidth = 'none'; // For Firefox
     bar.style.msOverflowStyle = 'none'; // For Internet Explorer and Edge
 });
+
 // html bar
 let htmlbar = document.querySelector("html")
     htmlbar.style.overflowY = 'scroll';
@@ -571,3 +522,4 @@ let htmlbar = document.querySelector("html")
 
 // call the function
 trendingshows()
+categories()
