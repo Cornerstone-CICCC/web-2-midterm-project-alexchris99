@@ -108,8 +108,10 @@ form{
         }
     }
     .mode{
+        position: absolute;
         border: none;
-        display: flex;
+        margin-top: -.2em;
+        margin-left: -1em;
         justify-content: center;
         align-content: center;
         width: 100px;
@@ -258,34 +260,40 @@ form{
 
 // category //
 .genre-Movies{
-    margin-top: 3em;
+    margin-top: 1em;
+    .genre-show-container{
+        &.dark{
+            background-color: #D8D2C2;
+        }
+    }
     &.dark{
         background-color: #D8D2C2;
     }
+    .GMovie{
+        height: auto;
+        padding: 0 1.5em;
+        &.dark{
+            color: black;
+            background-color: #D8D2C2;            
+        }
+    }
     .category{
-        margin-bottom: 3em;
+        margin-bottom: 1em;
         display: flex;
         overflow-x:scroll;
         scrollbar-width: none;
         &.dark{
             background-color: #D8D2C2;
         }
-        gap: 13em;
-        .GMovie{
-            position: absolute;
-            height: auto;
-            margin: -1em 0 0 .5em;
-            &.dark{
-                color: black;
-                background-color: #D8D2C2;            
-            }
-        }
+        gap: 1em;
         .item{
+            width: 100%;
             display: flex;
             .show-container{
                 flex-basis: 300px;
                 flex-shrink: 0;
-                width: 100%;
+                width: 300px;
+                margin: 1em 0 1em .8em;
             }
         }
     }
@@ -307,7 +315,7 @@ form{
       /* Modal Content/Box */
     .modal-content {
         background-color: #fefefe;
-        margin: 10% auto;/*15%fromthetopandcentered*/
+        margin: 2em auto;/*15%fromthetopandcentered*/
         padding: 20px;
         border: 1px solid #888;
         width: 90%;/*Couldbemoreorless,dependingonscreensize*/

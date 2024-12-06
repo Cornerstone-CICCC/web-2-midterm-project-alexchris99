@@ -213,6 +213,8 @@ async function categories(){
             if(dataCategory){
                 let section = document.querySelector(".genre-Movies")
                 let cont = 0
+                let genreContainer = document.createElement("div")
+                genreContainer.classList.add("genre-show-container")
                 // create a container per category
                 let category = document.createElement("div")
                 category.classList.add("category")
@@ -286,8 +288,10 @@ async function categories(){
                         let genreCat = document.createElement("h2")
                         genreCat.textContent = `${genre.name}`
                         genreCat.classList.add("GMovie")
-                        category.prepend(genreCat)
-                        section.append(category)
+                        genreContainer.append(genreCat,category)
+                        section.append(genreContainer)
+                    }else{
+                        
                     }
                 });
             }
@@ -470,6 +474,9 @@ document.querySelector(".mode").addEventListener("click", () =>{
     // categories 
     if(document.querySelector(".genre-Movies")){
         document.querySelector(".genre-Movies").classList.toggle("dark")
+        document.querySelectorAll(".genre-show-container").forEach(e =>{
+            e.classList.toggle("dark")
+        })
         document.querySelectorAll(".category").forEach(e => {
             e.classList.toggle("dark")
         })
