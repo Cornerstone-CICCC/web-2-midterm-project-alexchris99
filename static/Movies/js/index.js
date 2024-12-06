@@ -245,6 +245,7 @@ async function categories(){
                     if(!movie.poster_path && !movie.profile_path){
                         img="../../static/Movies/img/no_image.png"
                     }
+                    // TODO CHECK IF WE CAN IMRPOVE THIS PART TO AVOID THE MISTAKE WE HAVE IN MOVILE OPTION INSERT A NEW DIV
                     // generate the content of the show container
                     movieElement = htmlGenreCostructor(img,name,movie,movieElement)
                     // add and evenlister to clicking the image
