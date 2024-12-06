@@ -207,9 +207,13 @@ async function categories(){
         datacategories = datacategories.genres
         // get movies for each genre
         datacategories.forEach(async(genre) => {
-            let responseMoviesCategory = await fetch(`https://api.themoviedb.org/3/movie/${genre.id}/similar?language=en-US&page=1`, options)
-            let dataCategory = await responseMoviesCategory.json()
-            dataCategory = dataCategory.results
+            let responseMoviesCategory
+            let dataCategory
+            if(genre.name != "Western" && genre.name != "Thriller" &&  genre.name != "History" && genre.name != "Talk"){
+                responseMoviesCategory = await fetch(`https://api.themoviedb.org/3/movie/${genre.id}/similar?language=en-US&page=1`, options)
+                dataCategory = await responseMoviesCategory.json()
+                dataCategory = dataCategory.results
+            }
             if(dataCategory){
                 let section = document.querySelector(".genre-Movies")
                 let cont = 0
