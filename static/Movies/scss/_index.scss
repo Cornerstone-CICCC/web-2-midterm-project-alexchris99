@@ -13,12 +13,7 @@
     }
 }
 
-html{
-    &.dark{
-        background-color: #D8D2C2 !important;
-    }
-}
-
+// header and nav bar //
 header{
     &.dark{
         border: 1px solid black;
@@ -88,6 +83,7 @@ form{
     }
 }
 
+// title of the page and btn for ligth/dark mode //
 .page-name{
     margin: .7em auto;
     width: 100%;
@@ -128,7 +124,7 @@ form{
     }
 }
 
-// body
+// body //
 .main-container{
     &.dark{
         background-color: #D8D2C2;
@@ -147,9 +143,7 @@ form{
     }
 }
 
-
-
-// Show container info
+// Show container info //
 .show-container{
     overflow: hidden;
     background-color: $showbackground;
@@ -299,26 +293,26 @@ form{
     }
 }
 
-// Modal
-/* The Modal (background) */
+// Modal //
+// The Modal (background) //
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
+    display: none; 
+    position: fixed;
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-      /* Modal Content/Box */
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+      // Modal Content //
     .modal-content {
         background-color: #fefefe;
-        margin: 2em auto;/*15%fromthetopandcentered*/
+        margin: 2em auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 90%;/*Couldbemoreorless,dependingonscreensize*/
+        width: 90%;
         border-radius: 20px;
         -webkit-border-radius: 2;
         -moz-border-radius: 2;
@@ -371,6 +365,7 @@ form{
     }
 }
 
+// footer //
 footer{
     text-align: center;
     p{
@@ -381,7 +376,7 @@ footer{
     }
 }
 
-// about us
+// about us-page // 
 .about-description{
     padding-top: 1em ;
     width: 80%;
@@ -436,6 +431,7 @@ footer{
     }
 }
 
+// animation //
 @keyframes typing {
     from{
         width: 0;
@@ -445,6 +441,7 @@ footer{
     }
 }
 
+// tablet media query //
 @media(min-width: 720px ){
     .show-container{
         width: 40%;
