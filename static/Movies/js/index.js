@@ -64,6 +64,7 @@ const trendingshows = async () =>{
                 e.stopPropagation()
                 // create a modal
                 let modal = document.querySelector(".modal")
+                modal.classList.remove("fadeout")
                 // clean the modal
                 modal.innerHTML = ""
                 // create a modal container
@@ -86,7 +87,10 @@ const trendingshows = async () =>{
                 modal.style.display = "block"
                 // how to close the modal
                 modalCont.querySelector(".close").addEventListener("click", ()=>{
-                    modal.style.display = "none"
+                    modal.classList.add("fadeout")
+                    setTimeout(()=>{
+                        modal.style.display = "none"
+                    },499)
                 })
             })
             // apend the movie element in the doc
@@ -148,6 +152,7 @@ async function getUserInput(value){
             e.stopPropagation()
             // create a modal
             let modal = document.querySelector(".modal")
+            modal.classList.remove("fadeout")
             // clean the modal
             modal.innerHTML = ""
             // create a modal container
@@ -170,7 +175,10 @@ async function getUserInput(value){
             modal.style.display = "block"
             // how to close the modal
             modalCont.querySelector(".close").addEventListener("click", ()=>{
-                modal.style.display = "none"
+                modal.classList.add("fadeout")
+                    setTimeout(()=>{
+                        modal.style.display = "none"
+                    },499)
             })
         })
         // apend the movie element in the doc
@@ -251,7 +259,6 @@ async function categories(){
                     if(!movie.poster_path && !movie.profile_path){
                         img="../../static/Movies/img/no_image.png"
                     }
-                    // TODO CHECK IF WE CAN IMRPOVE THIS PART TO AVOID THE MISTAKE WE HAVE IN MOVILE OPTION INSERT A NEW DIV
                     // generate the content of the show container
                     movieElement = htmlGenreCostructor(img,name,movie,movieElement)
                     // add and evenlister to clicking the image
@@ -260,6 +267,7 @@ async function categories(){
                         e.stopPropagation()
                         // create a modal
                         let modal = document.querySelector(".modal")
+                        modal.classList.remove("fadeout")
                         // clean the modal
                         modal.innerHTML = ""
                         // create a modal container
@@ -282,7 +290,10 @@ async function categories(){
                         modal.style.display = "block"
                         // how to close the modal
                         modalCont.querySelector(".close").addEventListener("click", ()=>{
-                            modal.style.display = "none"
+                            modal.classList.add("fadeout")
+                            setTimeout(()=>{
+                                modal.style.display = "none"
+                            },499)
                         })
                     })
                     // apend the movie element in the doc
