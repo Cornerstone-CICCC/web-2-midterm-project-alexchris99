@@ -382,7 +382,7 @@ function modalconstructor(name, videUrl, overview, modalCont){
         <span class="close">&times</span>
         <div>
             <h3 class = "modal-title">${name}</h3>
-            <iframe class="trailer" src="https://www.youtube.com/embed/${videUrl}" controls allowfullscreen></iframe>
+            <iframe class="trailer" src="https://www.youtube.com/embed/${videUrl}?autoplay=1&mute=1" controls allowfullscreen></iframe>
             <div class = "modal-description">
                 ${overview}
             </div>
