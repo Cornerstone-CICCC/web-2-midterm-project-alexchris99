@@ -5,13 +5,15 @@ const options = {
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MjhjMTgxOGZjYTQwYzhiMTMxZTcyM2VjMjE3YWVjMCIsIm5iZiI6MTczMzA5NjYyMi41OTcsInN1YiI6IjY3NGNmNGFlZDU3NzQ3ZjIxMTU3ODdiYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1M2bWOWj1FQiFZFZZd997o-Ba6FcKL4N-rz3n5qw-tM'
     }
 }
-
+//cont
+let cont = 1
 // shows tag
 let section = document.querySelector(".shows")
 // category var
 let category 
 // async function to get the info of the movies and types //
-const trendingshows = async () =>{
+const trendingshows = async (cont) =>{
+    console.log(cont)
     if(document.querySelector("h1").textContent.includes("Trending")){
            // global variable to store the api response
         let response
@@ -19,15 +21,15 @@ const trendingshows = async () =>{
         const pageTitle = document.querySelector("h1")
         // fetch Trending movies and Tv
         if(pageTitle.textContent == "Trending"){
-            response = await fetch('https://api.themoviedb.org/3/trending/all/day?language=en-US', options)
+            response = await fetch(`https://api.themoviedb.org/3/trending/all/day?language=en-US&page=${cont}`, options)
         }
         // fetch Trending Series
         if(pageTitle.textContent == "Trending Series"){
-            response = await fetch('https://api.themoviedb.org/3/trending/tv/day?language=en-US', options)
+            response = await fetch(`https://api.themoviedb.org/3/trending/tv/day?language=en-US&page=${cont}`, options)
         }
         // fetch Trending Movies
         if(pageTitle.textContent == "Trending Movies"){
-            response = await fetch('https://api.themoviedb.org/3/trending/movie/day?language=en-US', options)
+            response = await fetch(`https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${cont}`, options)
         }
         // get the data nd transform it to json object
         let data = await response.json()
@@ -314,7 +316,21 @@ async function categories(){
     }
 }
 
+// load more trending if the user reaches the botom part
+const threshold = 80;
+let isFetching = false;
 
+// function that evaluates the user scrolling
+window.addEventListener('scroll', async function onScroll() {
+    // function that evaluates the window scrolling
+    if (window.innerHeight + window.scrollY > document.body.offsetHeight - threshold && !isFetching) {
+        isFetching = true;
+        cont += 1;
+        // call the trending function
+        await trendingshows(cont);
+        isFetching = false;
+    }
+});
 
 // CONSTRUCTORS AND URL FUNCTIONS //
 // html trending constructor
@@ -544,5 +560,5 @@ let htmlbar = document.querySelector("html")
     htmlbar.style.msOverflowStyle = 'none'; // For Internet Explorer and Edge
 
 // call the function
-trendingshows()
+trendingshows(cont)
 categories()

@@ -13,6 +13,10 @@
     }
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 // header and nav bar //
 header{
     &.dark{
