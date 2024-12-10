@@ -50,6 +50,7 @@ nav{
             border: none !important; 
         }
         .nav-link{
+            font-size: 1.5em;
             color: white;
             &.dark{
                 color:black;
@@ -293,7 +294,9 @@ form{
     }
 }
 
-
+iframe{
+    pointer-events: none;
+}
 // Modal //
 // The Modal (background) //
 .modal {
