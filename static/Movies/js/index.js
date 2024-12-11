@@ -13,7 +13,6 @@ let section = document.querySelector(".shows")
 let category 
 // async function to get the info of the movies and types //
 const trendingshows = async (cont) =>{
-    console.log(cont)
     if(document.querySelector("h1").textContent.includes("Trending")){
            // global variable to store the api response
         let response
@@ -442,12 +441,10 @@ async function getVideoTv(id){
 
 // FORM SUBMISION EVENT//
 // Handle form submision
-let form = document.querySelector("form")
-form.addEventListener("submit", function (e){
+let form = document.querySelector("form").querySelector("input")
+form.addEventListener("input",function (e){
     e.preventDefault()
-    let userInput = form.querySelector("input").value
-    getUserInput(userInput)
-    form.reset()
+    getUserInput(e.target.value)
 })
 
 // DARK AND LIGTH MODE//
